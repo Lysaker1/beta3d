@@ -51,7 +51,12 @@ export default function Viewer3D({ geometryData }: Viewer3DProps) {
 
   console.log('🎨 [Viewer3D] Setting up Canvas with rendering configuration');
   return (
-    <div className="w-full h-[500px] bg-gray-100 rounded-lg">
+    <div style={{ 
+      width: '100%', 
+      height: '100%',
+      position: 'relative',
+      overflow: 'hidden'
+    }}>
       <Canvas
         // Position camera at isometric view angle with 75° field of view
         camera={{ position: [5, 5, 5], fov: 75 }}
@@ -61,7 +66,12 @@ export default function Viewer3D({ geometryData }: Viewer3DProps) {
         dpr={[1, 2]}
         // Enable shadow mapping
         shadows
-        style={{ width: '100%', height: '100%', backgroundColor: 'grey' }}
+        style={{ 
+          width: '100%', 
+          height: '100%', 
+          background: '#111',
+          display: 'block'
+        }}
       >
         <Suspense fallback={null}>
           {/* Scene component handles the actual 3D geometry rendering */}

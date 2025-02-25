@@ -13,7 +13,7 @@ export default function Home() {
   console.log('🏠 [Home] Initializing page');
   
   // State for the selected mode and geometry
-  const [mode, setMode] = useState<GeneratorMode>('select');
+  const [mode, setMode] = useState<GeneratorMode>('basic');
   const [geometryData, setGeometryData] = useState<ViewerGeometryData>();
   const [viewerError, setViewerError] = useState<string>();
   const [isLoading, setIsLoading] = useState(false);
@@ -83,66 +83,189 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="p-4 bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <h1 className="text-2xl font-bold">Beta3D</h1>
-          <button
-            onClick={() => setMode('select')}
-            className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900"
-          >
-            ← Change Mode
-          </button>
+    <div style={{ 
+      display: 'flex', 
+      position: 'fixed', 
+      top: 0, 
+      left: 0, 
+      right: 0, 
+      bottom: 0, 
+      overflow: 'hidden',
+      flexDirection: 'column',
+      backgroundColor: '#000'
+    }}>
+      {/* Header */}
+      <div style={{
+        padding: '8px 16px',
+        borderBottom: '1px solid #333',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+      }}>
+        <h1 style={{ 
+          margin: 0, 
+          fontSize: '24px', 
+          fontWeight: 'bold',
+          color: 'white' 
+        }}>Beta3D</h1>
+        
+        <button
+          onClick={() => setMode('select')}
+          style={{ 
+            padding: '6px 14px', 
+            background: '#333',
+            border: '1px solid #555',
+            borderRadius: '4px',
+            color: 'white',
+            cursor: 'pointer',
+            fontSize: '14px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px'
+          }}
+        >
+          <span style={{ fontSize: '18px' }}>←</span> Change Mode
+        </button>
+      </div>
+      
+      {/* Main content */}
+      <div style={{ 
+        display: 'flex', 
+        flex: 1, 
+        height: 'calc(100vh - 43px)', /* Subtract header height */
+        overflow: 'hidden'
+      }}>
+        {/* Left sidebar */}
+        <div style={{ 
+          width: '25%', 
+          padding: '16px',
+          borderRight: '1px solid #333',
+          overflowY: 'auto',
+          backgroundColor: '#000',
+          color: 'white'
+        }}>
+          <h2 style={{ 
+            fontSize: '18px', 
+            fontWeight: 'bold', 
+            marginBottom: '16px' 
+          }}>
+            {mode === 'basic' ? 'Basic Generator' : 
+             mode === 'advanced' ? 'Advanced Component Generator' : 
+             'Text to 3D Generator'}
+          </h2>
+          
+          {mode === 'basic' ? (
+            <ModelGenerator 
+              onGeometryGenerated={handleGeometryGenerated}
+              onError={handleGeometryError}
+              onLoadingChange={setIsLoading}
+            />
+          ) : mode === 'advanced' ? (
+            <ComponentGenerator 
+              onGeometryGenerated={handleGeometryGenerated}
+              onError={handleGeometryError}
+              onLoadingChange={setIsLoading}
+            />
+          ) : (
+            <TextTo3DGenerator />
+          )}
+        </div>
+        
+        {/* Right area - 3D Viewer */}
+        <div style={{ 
+          width: '75%', 
+          position: 'relative',
+          height: '100%'
+        }}>
+          {isLoading && (
+            <div style={{
+              position: 'absolute', 
+              top: 0, 
+              left: 0, 
+              right: 0, 
+              bottom: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: 'rgba(0,0,0,0.7)',
+              zIndex: 10
+            }}>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ 
+                  width: '48px', 
+                  height: '48px', 
+                  border: '4px solid #3b82f6',
+                  borderTopColor: 'transparent',
+                  borderRadius: '50%',
+                  animation: 'spin 1s linear infinite',
+                  margin: '0 auto'
+                }}></div>
+                <p style={{ 
+                  marginTop: '16px', 
+                  color: '#60a5fa' 
+                }}>Generating 3D model...</p>
+              </div>
+            </div>
+          )}
+          
+          {viewerError ? (
+            <div style={{
+              position: 'absolute', 
+              top: 0, 
+              left: 0, 
+              right: 0, 
+              bottom: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: 'rgba(0,0,0,0.8)',
+              zIndex: 10
+            }}>
+              <div style={{
+                maxWidth: '400px',
+                padding: '24px',
+                textAlign: 'center',
+                color: '#f87171',
+                border: '1px solid #991b1b',
+                borderRadius: '8px',
+                backgroundColor: '#000'
+              }}>
+                <p style={{ 
+                  fontWeight: 'bold', 
+                  fontSize: '18px' 
+                }}>Error Generating Model</p>
+                <p style={{ 
+                  marginTop: '8px', 
+                  fontSize: '14px' 
+                }}>{viewerError}</p>
+              </div>
+            </div>
+          ) : null}
+          
+          <div style={{ 
+            position: 'absolute', 
+            top: 0, 
+            left: 0, 
+            right: 0, 
+            bottom: 0
+          }}>
+            <Viewer3D geometryData={geometryData} />
+          </div>
         </div>
       </div>
-
-      <main className="p-8">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1fr,2fr] gap-8">
-          {/* Left column: Generator controls */}
-          <div className="space-y-6 bg-white p-6 rounded-lg shadow-sm">
-            <h2 className="text-2xl font-bold mb-6">
-              {mode === 'basic' ? 'Basic Generator' : mode === 'advanced' ? 'Advanced Component Generator' : 'Text to 3D Generator'}
-            </h2>
-            
-            {mode === 'basic' ? (
-              <ModelGenerator />
-            ) : mode === 'advanced' ? (
-              <ComponentGenerator 
-                onGeometryGenerated={handleGeometryGenerated}
-                onError={handleGeometryError}
-                onLoadingChange={setIsLoading}
-              />
-            ) : (
-              <TextTo3DGenerator />
-            )}
-          </div>
-
-          {/* Right column: 3D Viewer */}
-          <div className="bg-white p-6 rounded-lg shadow-sm">
-            <h3 className="text-lg font-semibold mb-4">3D Preview</h3>
-            <div className="relative h-[calc(100vh-12rem)] bg-gray-100 rounded-lg overflow-hidden">
-              {isLoading && (
-                <div className="absolute inset-0 flex items-center justify-center bg-gray-100 bg-opacity-75">
-                  <div className="space-y-4 text-center">
-                    <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
-                    <p className="text-gray-600">Generating geometry...</p>
-                  </div>
-                </div>
-              )}
-              {viewerError ? (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="max-w-md p-4 text-center text-red-600">
-                    <p className="font-medium">Error generating geometry</p>
-                    <p className="text-sm mt-2">{viewerError}</p>
-                  </div>
-                </div>
-              ) : (
-                <Viewer3D geometryData={geometryData} />
-              )}
-            </div>
-          </div>
-        </div>
-      </main>
+      
+      <style jsx global>{`
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        html, body {
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+          height: 100%;
+        }
+      `}</style>
     </div>
   );
 }
