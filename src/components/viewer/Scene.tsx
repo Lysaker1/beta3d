@@ -76,6 +76,8 @@ export function Scene({ geometryData }: SceneProps) {
           camera.updateProjectionMatrix();
           console.log('📸 [Scene] Camera positioned at distance:', cameraDistance);
         }
+
+
       })
       .catch((error: Error) => {
         console.error('❌ [Scene] Error processing mesh:', error);
@@ -94,8 +96,9 @@ export function Scene({ geometryData }: SceneProps) {
       <PerspectiveCamera makeDefault />
       
       {/* Scene lighting */}
-      <ambientLight intensity={1.0} />
+      <ambientLight intensity={1.5} />
       <directionalLight position={[10, 10, 5]} intensity={2} />
+      <directionalLight position={[-10, -10, -5]} intensity={1} />
       
       {/* Controls and helpers */}
       <OrbitControls 
@@ -103,8 +106,9 @@ export function Scene({ geometryData }: SceneProps) {
         enableDamping 
         dampingFactor={0.1} 
       />
-      <gridHelper args={[20, 20]} /> {/* 20x20 grid for reference */}
-      <axesHelper args={[10]} /> {/* XYZ axes indicator */}
+      {/* Maybe comment out grid and axes helpers for testing */}
+      {/* <gridHelper args={[20, 20]} />
+      <axesHelper args={[10]} /> */}
     </>
   );
 } 

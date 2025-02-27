@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import ModelGenerator from '@/components/ModelGenerator';
 import ComponentGenerator from '@/components/ComponentGenerator';
 import TextTo3DGenerator from '@/components/TextTo3DGenerator';
@@ -11,6 +13,7 @@ type GeneratorMode = 'select' | 'basic' | 'advanced' | 'text';
 
 export default function Home() {
   console.log('🏠 [Home] Initializing page');
+  const router = useRouter();
   
   // State for the selected mode and geometry
   const [mode, setMode] = useState<GeneratorMode>('basic');
@@ -33,51 +36,69 @@ export default function Home() {
   // Render mode selector
   if (mode === 'select') {
     return (
-      <div className="min-h-screen p-8 bg-gray-50">
-        <main className="max-w-4xl mx-auto">
-          <header className="text-center mb-16">
-            <h1 className="text-4xl font-bold mb-4">Beta3D</h1>
-            <p className="text-gray-600">Choose your generation mode</p>
-          </header>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Basic Generator Card */}
-            <button
-              onClick={() => setMode('basic')}
-              className="p-8 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow"
-            >
-              <h2 className="text-2xl font-bold mb-4">Basic Generator</h2>
-              <p className="text-gray-600 mb-4">
+      <div className="container mx-auto py-12 px-4">
+        <h1 className="text-4xl font-bold mb-12 text-center">Beta3D</h1>
+        
+        <h2 className="text-2xl font-semibold mb-6 text-center">Choose your generation mode</h2>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-white border rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+            <div className="p-6">
+              <h3 className="text-xl font-bold mb-4">Basic Generator</h3>
+              <p className="text-gray-600 mb-6">
                 Create simple parametric 3D models using sliders and basic parameters.
               </p>
-              <div className="text-blue-600">Get Started →</div>
-            </button>
-
-            {/* Advanced Generator Card */}
-            <button
-              onClick={() => setMode('advanced')}
-              className="p-8 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow"
-            >
-              <h2 className="text-2xl font-bold mb-4">Advanced Component Generator</h2>
-              <p className="text-gray-600 mb-4">
+              <button
+                onClick={() => setMode('basic')}
+                className="block w-full py-2 bg-blue-600 text-white text-center rounded hover:bg-blue-700"
+              >
+                Get Started →
+              </button>
+            </div>
+          </div>
+          
+          <div className="bg-white border rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+            <div className="p-6">
+              <h3 className="text-xl font-bold mb-4">Advanced Component Generator</h3>
+              <p className="text-gray-600 mb-6">
                 Generate complex bicycle components using natural language descriptions.
               </p>
-              <div className="text-blue-600">Get Started →</div>
-            </button>
-
-            {/* Text to 3D Generator Card */}
-            <button
-              onClick={() => setMode('text')}
-              className="p-8 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow"
-            >
-              <h2 className="text-2xl font-bold mb-4">Text to 3D Generator</h2>
-              <p className="text-gray-600 mb-4">
+              <button
+                onClick={() => setMode('advanced')}
+                className="block w-full py-2 bg-blue-600 text-white text-center rounded hover:bg-blue-700"
+              >
+                Get Started →
+              </button>
+            </div>
+          </div>
+          
+          <div className="bg-white border rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+            <div className="p-6">
+              <h3 className="text-xl font-bold mb-4">Text to 3D Generator</h3>
+              <p className="text-gray-600 mb-6">
                 Generate 3D models from text descriptions using natural language processing.
               </p>
-              <div className="text-blue-600">Get Started →</div>
-            </button>
+              <button
+                onClick={() => setMode('text')}
+                className="block w-full py-2 bg-blue-600 text-white text-center rounded hover:bg-blue-700"
+              >
+                Get Started →
+              </button>
+            </div>
           </div>
-        </main>
+        </div>
+        
+        <div className="mt-12">
+          <h3 className="text-xl font-semibold mb-4 text-center">For Suppliers</h3>
+          <div className="flex justify-center">
+            <Link 
+              href="/supplier"
+              className="px-6 py-3 bg-green-600 text-white text-center rounded hover:bg-green-700"
+            >
+              Upload Your Component →
+            </Link>
+          </div>
+        </div>
       </div>
     );
   }
@@ -175,7 +196,7 @@ export default function Home() {
         <div style={{ 
           width: '75%', 
           position: 'relative',
-          height: '100%'
+          height: '100%',
         }}>
           {isLoading && (
             <div style={{
@@ -187,7 +208,7 @@ export default function Home() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              backgroundColor: 'rgba(0,0,0,0.7)',
+              backgroundColor: 'rgba(234, 251, 203, 0.7)',
               zIndex: 10
             }}>
               <div style={{ textAlign: 'center' }}>

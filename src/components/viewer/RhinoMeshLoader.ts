@@ -76,6 +76,20 @@ export async function decodeRhinoMesh(
     }
 
     console.log('✅ [decodeRhinoMesh] Successfully decoded Rhino mesh');
+
+    const faces = decodedObj.faces();
+    const vertices = decodedObj.vertices();
+
+    console.log('Face count:', faces.count);
+    console.log('Sample face:', faces.get(0));
+    console.log('Vertex count:', vertices.count);
+    console.log('Sample vertex:', vertices.get(0));
+
+    console.log('Face samples:', 
+      [...Array(Math.min(5, faces.count))].map((_, i) => faces.get(i)));
+    console.log('Vertex samples:', 
+      [...Array(Math.min(5, vertices.count))].map((_, i) => vertices.get(i)));
+
     return decodedObj as RhinoMesh;
 
   } catch (error) {

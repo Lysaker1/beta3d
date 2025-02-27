@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { createGHXDefinition } from '@/utils/ghx';
 import type { ViewerGeometryData } from '@/components/viewer';
+import { createGHXFromTemplate } from '@/utils/ghxGeneratorFromTemplate';
 
 // Valid component types
 const COMPONENT_TYPES = ['wheel', 'pedal', 'handlebar', 'saddle'] as const;
@@ -111,7 +112,20 @@ export default function ComponentGenerator({
 
       // Create a GHX definition from the generated code
       console.log('📦 [ComponentGenerator] Creating GHX definition');
-      const ghxDefinition = createGHXDefinition(code, parameters);
+      const tempTemplate = {
+        id: 'custom',
+        name: 'Custom Component',
+        description: 'Generated from AI',
+        parameterDefinitions: Object.entries(parameters).map(([name, value]) => ({
+          name,
+          displayName: name,
+          description: '',
+          defaultValue: Number(value)
+        })),
+        pythonCode: code
+      };
+
+      const ghxDefinition = createGHXFromTemplate(tempTemplate, parameters);
 
       // Send the GHX definition to Rhino Compute
       console.log('🌐 [ComponentGenerator] Sending to Rhino Compute');

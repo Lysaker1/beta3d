@@ -69,7 +69,7 @@ export default function Viewer3D({ geometryData }: Viewer3DProps) {
         style={{ 
           width: '100%', 
           height: '100%', 
-          background: '#111',
+          background: '#e6ffe6',
           display: 'block'
         }}
       >

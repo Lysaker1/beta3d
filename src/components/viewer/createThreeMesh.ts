@@ -58,8 +58,13 @@ export function createThreeMesh(rhinoMesh: RhinoMesh): Mesh {
   // Create material with standard properties
   console.log('🎨 [createThreeMesh] Creating mesh material');
   const material = new MeshStandardMaterial({
-    color: 0x00ff00, // Green color
-    side: DoubleSide, // Render both sides of faces
+    color: 0x00aaff,
+    side: DoubleSide,
+    wireframe: false,
+    metalness: 0.2,
+    roughness: 0.5,
+    emissive: 0x222222,
+    flatShading: true
   });
 
   // Create final mesh combining geometry and material

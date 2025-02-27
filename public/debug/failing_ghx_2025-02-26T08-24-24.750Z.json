@@ -1,0 +1,92 @@
+{
+  "parameters": {
+    "steerer_length": 150,
+    "steerer_diameter": 28.6,
+    "crown_width": 60,
+    "blade_length": 400,
+    "dropout_width": 100,
+    "rake": 45
+  },
+  "computeBody": {
+    "algo": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiIHN0YW5kYWxvbmU9InllcyI/Pgo8QXJjaGl2ZSBuYW1lPSJSb290Ij4KICA8IS0tR3Jhc3Nob3BwZXIgYXJjaGl2ZS0tPgogIDwhLS1HcmFzc2hvcHBlciBhbmQgR0hfSU8uZGxsIGFyZSBjb3B5cmlnaHRlZCBieSBSb2JlcnQgTWNOZWVsICYgQXNzb2NpYXRlcy0tPgogIDwhLS1BcmNoaXZlIGdlbmVyYXRlZCBieSBHSF9JTy5kbGwgZmlsZSB1dGlsaXR5IGxpYnJhcnkgezAuMi4wMDAyfS0tPgogIDxpdGVtcyBjb3VudD0iMSI+CiAgICA8aXRlbSBuYW1lPSJBcmNoaXZlVmVyc2lvbiIgdHlwZV9uYW1lPSJnaF92ZXJzaW9uIiB0eXBlX2NvZGU9IjgwIj4KICAgICAgPE1ham9yPjA8L01ham9yPgog...",
+    "pointer": null,
+    "values": [
+      {
+        "ParamName": "steerer_length",
+        "InnerTree": {
+          "0": [
+            {
+              "type": "System.Double",
+              "data": 150
+            }
+          ]
+        }
+      },
+      {
+        "ParamName": "steerer_diameter",
+        "InnerTree": {
+          "0": [
+            {
+              "type": "System.Double",
+              "data": 28.6
+            }
+          ]
+        }
+      },
+      {
+        "ParamName": "crown_width",
+        "InnerTree": {
+          "0": [
+            {
+              "type": "System.Double",
+              "data": 60
+            }
+          ]
+        }
+      },
+      {
+        "ParamName": "blade_length",
+        "InnerTree": {
+          "0": [
+            {
+              "type": "System.Double",
+              "data": 400
+            }
+          ]
+        }
+      },
+      {
+        "ParamName": "dropout_width",
+        "InnerTree": {
+          "0": [
+            {
+              "type": "System.Double",
+              "data": 100
+            }
+          ]
+        }
+      },
+      {
+        "ParamName": "rake",
+        "InnerTree": {
+          "0": [
+            {
+              "type": "System.Double",
+              "data": 45
+            }
+          ]
+        }
+      }
+    ],
+    "files": null
+  },
+  "error": "",
+  "status": 500,
+  "statusText": "Internal Server Error",
+  "headers": {
+    "content-length": "0",
+    "date": "Wed, 26 Feb 2025 08:24:24 GMT",
+    "server": "Microsoft-IIS/10.0",
+    "x-powered-by": "ASP.NET"
+  }
+}

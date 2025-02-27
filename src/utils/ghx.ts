@@ -177,19 +177,27 @@ export function isValidGHX(base64GHX: string): boolean {
 
 export function validateGHXContent(ghxContent: string): boolean {
   try {
-    // Check for required structure
+    // Determine if content is base64-encoded
+    const isBase64 = /^[A-Za-z0-9+/=]+$/.test(ghxContent.trim());
+    
+    // If base64, decode first
+    const decodedContent = isBase64 
+      ? Buffer.from(ghxContent, 'base64').toString('utf-8') 
+      : ghxContent;
+    
+    // Check for essential GHX elements
     const requiredElements = [
       '<?xml version="1.0"',
-      '<Archive>',
-      '<chunks count="2"',
-      '<script>',
-      'CDATA',
-      '<ParameterData>'
+      '<Archive',
+      '<item name="ArchiveVersion"',
+      'grasshopper'
     ];
     
-    return requiredElements.every(element => ghxContent.includes(element));
+    return requiredElements.every(element => 
+      decodedContent.toLowerCase().includes(element.toLowerCase())
+    );
   } catch (error) {
-    console.error('GHX validation error:', error);
+    console.error('🔍 [validateGHXContent] Validation error:', error);
     return false;
   }
-} 
+}
